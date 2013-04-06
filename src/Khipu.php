@@ -54,40 +54,37 @@ class Khipu
   }
   
   /**
-   * Carga el servicio y retorna el objeto, en caso de no existir el servicio.
-   * El script se detiene retornando el error.
+   * Carga el servicio y retorna el objeto, en caso de no existir el servicio,
+   * se invoca un excepcion.
    */
   public function loadService($service_name) {
     // Definimos el nombre de la clase completa del servicio.
     $class = 'KhipuService' . $service_name;
     // Asignamos la ruta del archivo que contiene la clase.
     $filename = KHIPU_ROOT . 'KhipuService/' . $class . '.php';
-    try {
-      // Consultamos si existe el archivo.
-      if (file_exists($filename)) {
-        // Si existe se llama.
-        require $filename;
-        // Se consulta por el servicio para realizar la carga correspondiente.
-        switch ($service_name) {
-          case 'CreateEmail':
-          case 'CreatePaymentPage':
-            // Es requerido identificarse para usar estos servicios.
-            if ($this->receiver_id && $this->secret) {
-              return new $class($this->receiver_id, $this->secret);
-            }
-            throw new Exception("Is necessary to authenticate to use the service \"$service_name\"");
-          // VerifyPaymentNotification no requiere receiver_id y secret
-          case 'VerifyPaymentNotification':
-            return new $class();
-        }
+    
+    // Consultamos si existe el archivo.
+    if (file_exists($filename)) {
+      // Si existe se llama.
+      require $filename;
+      // Se consulta por el servicio para realizar la carga correspondiente.
+      switch ($service_name) {
+        case 'CreateEmail':
+        case 'CreatePaymentPage':
+          // Es requerido identificarse para usar estos servicios.
+          if ($this->receiver_id && $this->secret) {
+            return new $class($this->receiver_id, $this->secret);
+          }
+          // Invocamos un Exception
+          throw new Exception("Is necessary to authenticate to use the service \"$service_name\"");
+        // VerifyPaymentNotification no requiere receiver_id y secret
+        case 'VerifyPaymentNotification':
+          return new $class();
       }
-      // Si no existe el servicio se llama un Exception
-      throw new Exception("The service \"$service_name\" does not exist");
     }
-    catch(Exception $exp) {
-      // Detenemos el script si existe la Exception
-      die($exp->getMessage());
-    }
+    // Si no existe el servicio se invoca un Exception
+    throw new Exception("The service \"$service_name\" does not exist");
+    
   }
   
   /**
