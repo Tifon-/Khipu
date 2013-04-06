@@ -30,26 +30,26 @@ class KhipuServiceCreateEmail extends KhipuService {
   function __construct($receiver_id, $secret){ 
     parent::__construct($receiver_id, $secret);
     // Cargamos el objeto KhipuRecipientes para adjuntar destinatarios.
-		$this->recipients = new KhipuRecipients();
+    $this->recipients = new KhipuRecipients();
     // Iniciamos la variable apiUrl con la url del servicio.
-		$this->apiUrl = Khipu::getUrlService('CreateEmail');
+    $this->apiUrl = Khipu::getUrlService('CreateEmail');
     // Iniciamos el arreglo $data con los valores que requiere el servicio.
-  	$this->data = array(
-  	  'receiver_id' => $receiver_id,
-	    'subject' => '',
-	    'body' => '',
-	    'transaction_id' => '',
-	    'custom' => '',
-	    'notify_url' => '',
-	    'return_url' => '',
-	    'cancel_url' => '',
-	    'pay_directly' => 'true',
-	    'send_emails' => 'true',
-	    'expires_date' => '',
-	    'picture_url' => '',
-	  );
-	}
-	
+    $this->data = array(
+      'receiver_id' => $receiver_id,
+      'subject' => '',
+      'body' => '',
+      'transaction_id' => '',
+      'custom' => '',
+      'notify_url' => '',
+      'return_url' => '',
+      'cancel_url' => '',
+      'pay_directly' => 'true',
+      'send_emails' => 'true',
+      'expires_date' => '',
+      'picture_url' => '',
+    );
+  }
+  
   /**
    * Este metodo se encarga de adjuntar un destinatario al objeto.
    * 
@@ -62,8 +62,8 @@ class KhipuServiceCreateEmail extends KhipuService {
    */
   public function addRecipient($name, $email, $amount) {
     $this->recipients->addRecipient($name, $email, $amount);
-  	return $this;
-	}
+    return $this;
+  }
   
   /**
    * Metodo que envia la solicitud a Khipu para generar los cobros.
@@ -75,14 +75,14 @@ class KhipuServiceCreateEmail extends KhipuService {
     $string_data = $this->dataToString();
     // iniciamos un arreglo con los datos a enviar a la solicitud
     // y le atachamos el Hash de string_data y los detinatarios en JSON
-		$data_to_send = array(
-			'hash' => $this->doHash($string_data),
-			'destinataries' => $this->recipients_json,
-		);
+    $data_to_send = array(
+      'hash' => $this->doHash($string_data),
+      'destinataries' => $this->recipients_json,
+    );
     // Adicionalmente adjuntamos el resto de los valores iniciados en $data
-		foreach ($this->data as $name => $value) {
-			$data_to_send[$name] = $value;
-		}
+    foreach ($this->data as $name => $value) {
+      $data_to_send[$name] = $value;
+    }
     // Iniciamos CURL
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
@@ -93,7 +93,7 @@ class KhipuServiceCreateEmail extends KhipuService {
     $output = curl_exec($ch);
     //$info = curl_getinfo($ch);
     curl_close($ch);
-   	 
+     
     return $output;
   }
   
@@ -114,10 +114,10 @@ class KhipuServiceCreateEmail extends KhipuService {
     $string .= '&send_emails='    . $this->data['send_emails'];
     $string .= '&expires_date='   . $this->data['expires_date'];
     $string .= '&transaction_id=' . $this->data['transaction_id'];
-		$string .= '&custom='					. $this->data['custom'];
-		$string .= '&notify_url=' 		. $this->data['notify_url'];
-	  $string .= '&return_url=' 		. $this->data['return_url'];
-	  $string .= '&cancel_url=' 		. $this->data['cancel_url'];
+    $string .= '&custom='         . $this->data['custom'];
+    $string .= '&notify_url='     . $this->data['notify_url'];
+    $string .= '&return_url='     . $this->data['return_url'];
+    $string .= '&cancel_url='     . $this->data['cancel_url'];
     $string .= '&picture_url='    . $this->data['picture_url'];
     $string .= '&secret='         . $this->secret;
     return trim($string);

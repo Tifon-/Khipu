@@ -9,29 +9,29 @@ require_once 'KhipuService.php';
  * Este servicio facilita la creación del boton de pago.
  */
 class KhipuServiceCreatePaymentPage extends KhipuService {
-	
+  
   /**
    * Iniciamos el servicio
    */
-	public function __construct($receiver_id, $secret) {
-		parent::__construct($receiver_id, $secret);
+  public function __construct($receiver_id, $secret) {
+    parent::__construct($receiver_id, $secret);
     // Iniciamos la variable apiUrl con la url del servicio.
-		$this->apiUrl = Khipu::getUrlService('CreatePaymentPage');
+    $this->apiUrl = Khipu::getUrlService('CreatePaymentPage');
     // Iniciamos el arreglo $data con los valores que requiere el servicio.
-		$this->data = array(
-		  'receiver_id' => $receiver_id,
-	    'subject' => '',
-	    'body' => '',
-	    'amount' => 0,
-	    'custom' => '',
-	    'notify_url' => '',
-	    'return_url' => '',
-	    'cancel_url' => '',
-	    'transaction_id' => '',
-	    'picture_url' => '',
-	    'payer_email' => '',
-	  );
-	}
+    $this->data = array(
+      'receiver_id' => $receiver_id,
+      'subject' => '',
+      'body' => '',
+      'amount' => 0,
+      'custom' => '',
+      'notify_url' => '',
+      'return_url' => '',
+      'cancel_url' => '',
+      'transaction_id' => '',
+      'picture_url' => '',
+      'payer_email' => '',
+    );
+  }
   
   /**
    * Método que genera el formulario de pago en HTML
@@ -81,32 +81,32 @@ class KhipuServiceCreatePaymentPage extends KhipuService {
    * Método que retorna los datos requeridos para hacer el formulario
    * adjuntando el hash.
    */
-	public function getFormLabels() {
+  public function getFormLabels() {
     // Pasamos los datos a string
-		$string_data = $this->dataToString();
-		$values = array(
-			'hash' => $this->doHash($string_data),
-		);
-		foreach ($this->data as $name => $value) {
-			$values[$name] = $value;
-		}
-		return $values;
-	}
-	
-	protected function dataToString() {
-		$string = '';
-	  $string .= 'receiver_id=' . $this->data['receiver_id'];
-	  $string .= '&subject=' . $this->data['subject'];
-	  $string .= '&body=' . $this->data['body'];
-	  $string .= '&amount=' . $this->data['amount'];
-		$string .= '&payer_email=' . $this->data['payer_email'];
-		$string .= '&transaction_id=' . $this->data['transaction_id'];
-		$string .= '&custom=' . $this->data['custom'];
-		$string .= '&notify_url=' . $this->data['notify_url'];
-	  $string .= '&return_url=' . $this->data['return_url'];
-	  $string .= '&cancel_url=' . $this->data['cancel_url'];
-	  $string .= '&picture_url=' . $this->data['picture_url'];
-	  $string .= '&secret=' . $this->secret; 
-	  return $string;
-	}
+    $string_data = $this->dataToString();
+    $values = array(
+      'hash' => $this->doHash($string_data),
+    );
+    foreach ($this->data as $name => $value) {
+      $values[$name] = $value;
+    }
+    return $values;
+  }
+  
+  protected function dataToString() {
+    $string = '';
+    $string .= 'receiver_id=' . $this->data['receiver_id'];
+    $string .= '&subject=' . $this->data['subject'];
+    $string .= '&body=' . $this->data['body'];
+    $string .= '&amount=' . $this->data['amount'];
+    $string .= '&payer_email=' . $this->data['payer_email'];
+    $string .= '&transaction_id=' . $this->data['transaction_id'];
+    $string .= '&custom=' . $this->data['custom'];
+    $string .= '&notify_url=' . $this->data['notify_url'];
+    $string .= '&return_url=' . $this->data['return_url'];
+    $string .= '&cancel_url=' . $this->data['cancel_url'];
+    $string .= '&picture_url=' . $this->data['picture_url'];
+    $string .= '&secret=' . $this->secret; 
+    return $string;
+  }
 }

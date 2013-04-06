@@ -14,37 +14,37 @@ abstract class KhipuService {
    * 
    * @var string
    */
-	protected $receiver_id;
+  protected $receiver_id;
   
   /**
    * Llave del Cobrador
    * 
    * @var string
    */
-	protected $secret;
+  protected $secret;
   
   /**
    * Url del servicio
    * 
    * @var string
    */
-	protected $apiUrl;
+  protected $apiUrl;
   
   /**
    * Arreglo de los datos que se enviarán al servicio
    * 
    * @var array
    */
-	protected $data = array();
-	
+  protected $data = array();
+  
   /**
    * Por defecto iniciamos el servicio identificando al cobrador.
    */
-	public function __construct($receiver_id, $secret) {
-		$this->receiver_id = $receiver_id; 
+  public function __construct($receiver_id, $secret) {
+    $this->receiver_id = $receiver_id; 
     $this->secret = $secret; 
-	}
-	
+  }
+  
   /**
    * Genera el Hash que requiere Khipu.
    * 
@@ -53,10 +53,10 @@ abstract class KhipuService {
    *   de aplicar el método dataToString().
    * @return string
    */
-	protected function doHash($string) {
+  protected function doHash($string) {
     return sha1($string);
   }
-	
+  
   /**
    * Metodo para adjuntar el valor a uno de los elementos que
    * contempla el arreglo $data. Esta funcion solo registrará los valores
@@ -67,13 +67,13 @@ abstract class KhipuService {
    * @param string $value
    *   Valor que se registrará en el elemento de la llave $name
    */
-	public function setParameter($name, $value) {
+  public function setParameter($name, $value) {
     if (isset($this->data[$name])) {
       $this->data[$name] = $value;
     }
-		return $this;
+    return $this;
   }
-	
+  
   /**
    * Método que retorna un arreglo con los nombres de las llaves del arreglo
    * $data
@@ -89,14 +89,14 @@ abstract class KhipuService {
    * @return string
    *   Url del servicio.
    */
-	public function getApiUrl() {
-		return $this->apiUrl;
-	}
-	
+  public function getApiUrl() {
+    return $this->apiUrl;
+  }
+  
   /**
    * Este método se encarga de pasar el arreglo $data a un string. 
    * Cada servicio requiere que las variables esten en un orden en especifico
    * para ser aceptados en el servicio de Khipu.
    */
-	abstract protected function dataToString();
+  abstract protected function dataToString();
 }
