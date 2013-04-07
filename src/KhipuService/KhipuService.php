@@ -75,6 +75,19 @@ abstract class KhipuService {
   }
   
   /**
+   * Método para guardar, desde un arreglo, todos los elementos que debe
+   * tener el arreglo $data.
+   * 
+   * @param array $values
+   *   Arreglo con los elementos a guardar en $data.
+   */
+  public function setParameters($values) {
+    foreach ($values as $name => $value) {
+      $this->setParameter($name, $value);
+    } 
+  }
+  
+  /**
    * Método que retorna un arreglo con los nombres de las llaves del arreglo
    * $data
    */
