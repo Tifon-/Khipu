@@ -73,7 +73,7 @@ class KhipuServiceCreatePaymentPage extends KhipuService {
     
     $html->appendChild($form);
     
-    return html_entity_decode($html->saveHTML());
+    return $html->saveHTML();
   }
   
   

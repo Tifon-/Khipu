@@ -66,7 +66,7 @@ class Khipu
     // Consultamos si existe el archivo.
     if (file_exists($filename)) {
       // Si existe se llama.
-      require $filename;
+      require_once $filename;
       // Se consulta por el servicio para realizar la carga correspondiente.
       switch ($service_name) {
         case 'CreateEmail':
