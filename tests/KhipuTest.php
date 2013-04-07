@@ -2,7 +2,7 @@
 
 require_once '/../src/Khipu.php';
 
-
+require_once 'settingsTest.php';
 
 class KhipuTest extends PHPUnit_Framework_TestCase {
   
