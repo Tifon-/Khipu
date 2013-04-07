@@ -22,7 +22,7 @@ class KhipuRecipients {
    * Metodo que asigna a la variable recipientes un nuevo destinatario.
    */
   public function addRecipient($name, $email, $amount) {
-    if (count($this->recipients) == LIMIT_RECIPIENTS) {
+    if (count($this->recipients) == self::LIMIT_RECIPIENTS) {
       // El servicio tiene un limite
       return;
     }
@@ -38,5 +38,17 @@ class KhipuRecipients {
    */
   public function getJson() {
     return json_encode($this->recipients);
+  }
+  
+  /**
+   * Método que limpia los destinatarios.
+   */
+  public function cleanRecipients() {
+    $this->recipients = array();
+  }
+  
+  
+  public function getRecipients() {
+    return $this->recipients;
   }
 }

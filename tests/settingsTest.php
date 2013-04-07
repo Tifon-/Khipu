@@ -1,0 +1,5 @@
+<?php
+
+define('KHIPU_TEST_RECEIVER_ID', '1698');
+
+define('KHIPU_TEST_SECRET', 'c8ec73a982adc711a0069439eeaf8dd3a927b388');

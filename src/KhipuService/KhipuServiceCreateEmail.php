@@ -65,6 +65,22 @@ class KhipuServiceCreateEmail extends KhipuService {
     return $this;
   }
   
+  
+  /**
+   * Método que retorna los destinatarios
+   */
+  public function getRecipients() {
+    return $this->recipients->getRecipients();
+  }
+  
+  /**
+   * Limpa los destinatarios.
+   */
+  public function cleanRecipients() {
+    $this->recipients->cleanRecipients();
+    return $this;
+  }
+  
   /**
    * Metodo que envia la solicitud a Khipu para generar los cobros.
    */
