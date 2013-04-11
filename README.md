@@ -6,7 +6,7 @@ Versión API Khipu: 1.1
 
 Librería PHP para utilizar los servicios de Khipu.com
 
-La documentación de Khipu se puede ver desde aquí: https://khipu.com/page/api
+La documentación de Khipu.com se puede ver desde aquí: https://khipu.com/page/api
 
 ## Introducción
 
@@ -43,15 +43,24 @@ A continuación un ejemplo
     'body' => 'Descripción del producto',
     'transaction_id' => '1',
     'pay_directly' => 'false',
-    'send_emails' => 'true', // Decimos que envie los correos
-    'return_url' => '', // Si contamos con algun sitio, podemos redireccionarlo
-    'expires_date' => time() + 30 * 10, // Le damos un tiempo de expiración
-    'picture_url' => '', // Opcionalmente podemos asignar una URL de una imagen
+    // Decimos que envie los correos.
+    'send_emails' => 'true',
+    // Si contamos con algun sitio, podemos redireccionar al usuario
+    // a esta URL una vez que pague. 
+    'return_url' => '', 
+    // Le damos un tiempo de expiración.
+    'expires_date' => time() + 30 * 10,
+    // Opcionalmente podemos asignar una URL de una imagen. 
+    'picture_url' => '', 
   );
   // Recorremos los datos y se lo asignamos al servicio
   foreach($data as $name => $value) {
     $khipu_service->setParameter($name, $value);
   }
+  /**
+   * En reemplazo de setParameter se podría usar
+   * $this->setParameters($data); 
+   */
   // Agregamos un destinatario con un monto
   $khipu_service->addRecipient('Cliente', 'cliente@gmai.com', 25000);
   
@@ -129,11 +138,27 @@ A continuación un ejemplo:
 
 La clase Khipu cuenta con dos funciones estáticas, las cuales son:
 
-1) Khipu::getUrlService($service);
+### getUrlService()
+```php
+<?php
+  // ...
+  require_once "Khipu.php";
+  
+  // Imprime https://khipu.com/api/1.1/verifyPaymentNotification
+  echo Khipu::getUrlService('VerifyPaymentNotification');
+?>
+``` 
+Esta función recibe el nombre del servicio y retorna la URL de Khipu que 
+corresponde.
 
-Esta función recibe el nombre del servicio y retorna la URL de Khipu
-
-2) Khipu::getButtonsKhipu();
-
-Esta función retorna la lista de botones que nos da a dispoción Khipu.com,
-la lista la pueden ver aquí: https://khipu.com/page/botones-de-pago
+### getButtonsKhipu()
+```php
+<?php
+  // ...
+  require_once "Khipu.php";
+  
+  $buttons = Khipu::getButtonsKhipu();
+?>  
+``` 
+Esta función retorna la lista de links de los botones de Khipu.com, la pueden ver
+aquí: https://khipu.com/page/botones-de-pago

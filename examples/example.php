@@ -1,4 +1,10 @@
 <?php 
+  /**
+   * En este ejemplo crearemos un botón de pago.
+   * 
+   * Para probarlo debes contar con una cuenta de cobrador que lo puedes
+   * conseguir gratuitamente ingresando a Khipu.com
+   */
   require_once "setting_example.php";
   require_once "../src/Khipu.php";
 ?>
@@ -10,7 +16,7 @@
   <meta name="description" content="Example Khipu Library">
 </head>
 <body style="margin:0; background: #f5f5f5;">
-  <div style="padding:10px;">
+  <div style="padding:10px; width: 600px; margin: auto;">
     <h1 style="color: #2F2001;">Example Khipu Library</h1>
     <div>Esto es un ejemplo usando la <a href="https://github.com/mnico/Khipu" target="_blank">librería Khipu</a> para crear un boton de pago</div>
     <div>
@@ -59,10 +65,9 @@
           </div>
         </div>
       <?php else: ?>
-        <div>Aquí se generará el boton de pago.</div>
+        <div>Aquí se generará el botón de pago.</div>
       <?php endif;?>
     </div>
-   
   </div>
 </body>
 </html>
