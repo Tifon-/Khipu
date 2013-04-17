@@ -27,9 +27,9 @@ class KhipuTest extends PHPUnit_Framework_TestCase {
     $this->assertInstanceOf('Exception', $this->loadServiceKhipu($khipu, 'ServiceNotExist'));
   }
   
-  public function testLoadServiceCreateEmailError() {
+  public function testLoadServiceCreateEmailException() {
     $khipu = new Khipu();
-    $this->assertInstanceOf('KhipuService', $this->loadServiceKhipu($khipu, 'CreateEmail'),
+    $this->assertInstanceOf('Exception', $this->loadServiceKhipu($khipu, 'CreateEmail'),
       'Se espera que haya error ya que se requiere autentificación');
   }
   
@@ -39,9 +39,9 @@ class KhipuTest extends PHPUnit_Framework_TestCase {
     $this->assertInstanceOf('KhipuService', $this->loadServiceKhipu($khipu, 'CreateEmail'));
   }
   
-  public function testLoadServiceCreatePaymentPageError() {
+  public function testLoadServiceCreatePaymentPageException() {
     $khipu = new Khipu();
-    $this->assertInstanceOf('KhipuService', $this->loadServiceKhipu($khipu, 'CreatePaymentPage'),
+    $this->assertInstanceOf('Exception', $this->loadServiceKhipu($khipu, 'CreatePaymentPage'),
       'Se espera que haya error ya que se requiere autentificación');
   }
   
