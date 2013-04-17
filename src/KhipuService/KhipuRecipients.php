@@ -1,10 +1,15 @@
 <?php
 
 /**
- * @file
- * Clase para registrar los destinatarios.
+ * (c) Nicolas Moncada <nicolas.moncada@tifon.cl>
+ * 
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
+/**
+ * Clase para registrar los destinatarios.
+ */ 
 class KhipuRecipients {
   /**
    * Arreglo de destinatarios
