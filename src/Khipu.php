@@ -22,43 +22,43 @@ class Khipu
    * Version del servicio de Khipu.
    */
   const VERSION_KHIPU_SERVICE = '1.1';
-  
+
   /**
    * Version
    */
   const VERSION = '1.0';
-  
+
   /**
    * Corresponde a la ID del cobrador.
-   * 
+   *
    * @var string
    */
   protected $receiver_id;
-  
+
   /**
    * Corresponde a la llave del cobrador.
-   * 
+   *
    * @var string
    */
   protected $secret;
-  
+
   /**
    * Opcionalmente para identificar al cobrador que utilizara Khipu.
-   * 
+   *
    * Solo se requiere para usar los siguientes servicio:
    *   - CreateEmail
    *   - CreatePaymentPage
-   * 
+   *
    * @param string $receiver_id
    *   Identificador dado por el servicio Khipu.
    * @param string $secret
    *   La llave secreta del identificador.
    */
   public function authenticate($receiver_id, $secret) {
-    $this->receiver_id = $receiver_id; 
-    $this->secret = $secret; 
+    $this->receiver_id = $receiver_id;
+    $this->secret = $secret;
   }
-  
+
   /**
    * Carga el servicio y retorna el objeto, en caso de no existir el servicio,
    * se invoca un excepcion.
@@ -68,7 +68,7 @@ class Khipu
     $class = 'KhipuService' . $service_name;
     // Asignamos la ruta del archivo que contiene la clase.
     $filename = KHIPU_ROOT . 'KhipuService/' . $class . '.php';
-    
+
     // Consultamos si existe el archivo.
     if (file_exists($filename)) {
       // Si existe se llama.
@@ -76,6 +76,7 @@ class Khipu
       // Se consulta por el servicio para realizar la carga correspondiente.
       switch ($service_name) {
         case 'CreateEmail':
+        case 'ReceiverStatus':
         case 'CreatePaymentPage':
           // Es requerido identificarse para usar estos servicios.
           if ($this->receiver_id && $this->secret) {
@@ -90,17 +91,17 @@ class Khipu
     }
     // Si no existe el servicio se invoca un Exception
     throw new Exception("The service \"$service_name\" does not exist");
-    
+
   }
-  
+
   /**
    * Funcion que retorna las URL de los servicios de Khipu.
-   * 
+   *
    * @param string $service_name
    *   Nombre del servicio
    */
   public static function getUrlService($service_name) {
-    $url_khipu = 'https://khipu.com/api/1.1/';
+    $url_khipu = 'https://khipu.com/api/' . self::VERSION_KHIPU_SERVICE . '/';
     switch ($service_name) {
       case 'CreateEmail':
         return $url_khipu . 'createEmail';
@@ -108,11 +109,13 @@ class Khipu
         return $url_khipu . 'createPaymentPage';
       case 'VerifyPaymentNotification':
         return $url_khipu . 'verifyPaymentNotification';
+      case 'ReceiverStatus':
+        return $url_khipu . 'receiverStatus';
       default:
         return FALSE;
     }
   }
-  
+
   /**
    * Funcion que retorna la lista de botones que da a disposición Khipu.
    */

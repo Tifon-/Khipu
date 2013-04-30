@@ -1,7 +1,7 @@
-<?php 
+<?php
   /**
    * En este ejemplo crearemos un botón de pago.
-   * 
+   *
    * Para probarlo debes contar con una cuenta de cobrador que lo puedes
    * conseguir gratuitamente ingresando a Khipu.com
    */
@@ -23,26 +23,26 @@
       <form method="POST">
         <div>
           <label>ID Cobrador</label>
-          <input required type="number" name="receiver_id" value="<?php print isset($_POST['receiver_id']) ? $_POST['receiver_id'] : '';?>"/> 
+          <input required type="number" name="receiver_id" value="<?php print isset($_POST['receiver_id']) ? $_POST['receiver_id'] : '';?>"/>
         </div>
         <div>
           <label>Llave</label>
-          <input required size="43" type="textfield" name="secret" value="<?php print isset($_POST['secret']) ? $_POST['secret'] : '';?>"/> 
+          <input required size="43" type="textfield" name="secret" value="<?php print isset($_POST['secret']) ? $_POST['secret'] : '';?>"/>
         </div>
         <div>
           <label>Monto</label>
-          <input required min="1" type="number" name="amount" value="<?php print isset($_POST['amount']) ? $_POST['amount'] : $amount;?>"/> 
+          <input required min="1" type="number" name="amount" value="<?php print isset($_POST['amount']) ? $_POST['amount'] : $amount;?>"/>
         </div>
         <input type="submit" value="Generar Botón"/>
       </form>
       <?php if (isset($_POST['receiver_id']) && isset($_POST['secret'])) :?>
-        <?php 
+        <?php
           $Khipu = new Khipu();
           // Nos identificamos
           $Khipu->authenticate($_POST['receiver_id'], $_POST['secret']);
           // Cargamos el servicio para crear el boton
           $khipu_service = $Khipu->loadService('CreatePaymentPage');
-          
+
           if ($_POST['amount'] > 0) {
             $data['amount'] = $_POST['amount'];
           }
@@ -52,17 +52,24 @@
           <ul>
             <?php foreach ($data as $name => $value):?>
               <li><strong><?php print $name;?></strong> = <?php print $value;?></li>
-              <?php 
+              <?php
                 // Le asignamos los valores
                 $khipu_service->setParameter($name, $value);?>
             <?php endforeach;?>
           </ul>
-          
+
           <div>
-            <?php 
+            <?php
               // Generamos el formulario.
               print $khipu_service->renderForm();?>
           </div>
+        </div>
+        <div>
+          <h2>Estado de la cuenta:</h2>
+          <?php
+            $service2 = $Khipu->loadService('ReceiverStatus');
+            print $service2->consult();
+          ?>
         </div>
       <?php else: ?>
         <div>Aquí se generará el botón de pago.</div>
