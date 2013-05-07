@@ -26,7 +26,7 @@ class Khipu
   /**
    * Version
    */
-  const VERSION = '1.0';
+  const VERSION = '1.1';
 
   /**
    * Corresponde a la ID del cobrador.
@@ -73,20 +73,19 @@ class Khipu
     if (file_exists($filename)) {
       // Si existe se llama.
       require_once $filename;
-      // Se consulta por el servicio para realizar la carga correspondiente.
-      switch ($service_name) {
-        case 'CreateEmail':
-        case 'ReceiverStatus':
-        case 'CreatePaymentPage':
-          // Es requerido identificarse para usar estos servicios.
-          if ($this->receiver_id && $this->secret) {
-            return new $class($this->receiver_id, $this->secret);
-          }
-          // Invocamos un Exception
-          throw new Exception("Is necessary to authenticate to use the service \"$service_name\"");
-        // VerifyPaymentNotification no requiere receiver_id y secret
-        case 'VerifyPaymentNotification':
-          return new $class();
+
+      $services_name = self::getAllServicesName();
+
+      if ($services_name[$service_name]) {
+        // Es requerido identificarse para usar estos servicios.
+        if ($this->receiver_id && $this->secret) {
+          return new $class($this->receiver_id, $this->secret);
+        }
+        // Invocamos un Exception
+        throw new Exception("Is necessary to authenticate to use the service \"$service_name\"");
+      }
+      else {
+        return new $class();
       }
     }
     // Si no existe el servicio se invoca un Exception
@@ -102,18 +101,32 @@ class Khipu
    */
   public static function getUrlService($service_name) {
     $url_khipu = 'https://khipu.com/api/' . self::VERSION_KHIPU_SERVICE . '/';
-    switch ($service_name) {
-      case 'CreateEmail':
-        return $url_khipu . 'createEmail';
-      case 'CreatePaymentPage':
-        return $url_khipu . 'createPaymentPage';
-      case 'VerifyPaymentNotification':
-        return $url_khipu . 'verifyPaymentNotification';
-      case 'ReceiverStatus':
-        return $url_khipu . 'receiverStatus';
-      default:
-        return FALSE;
+
+    $services_name = self::getAllServicesName();
+
+    if (array_key_exists($service_name, $services_name)) {
+      return $url_khipu . lcfirst($service_name);
     }
+
+    return FALSE;
+  }
+
+
+  /**
+   * Funcion que retorna los nombre de servicios que existen y si se requiere
+   * identificarse.
+   */
+  public static function getAllServicesName() {
+    return array(
+      'CreateEmail' => TRUE,
+      'CreatePaymentPage' => TRUE,
+      'VerifyPaymentNotification' => FALSE,
+      'ReceiverStatus' => TRUE,
+      'SetBillExpired' => TRUE,
+      'SetPayedByReceiver' => TRUE,
+      'SetRejectedByPayer' => TRUE,
+      'PaymentStatus' => TRUE,
+    );
   }
 
   /**

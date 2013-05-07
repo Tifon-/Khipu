@@ -2,7 +2,7 @@
 
 /**
  * (c) Nicolas Moncada <nicolas.moncada@tifon.cl>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -12,29 +12,29 @@ require_once 'KhipuRecipients.php';
 
 /**
  * Servicio CreateEmail que extiende de KhipuService.
- * 
+ *
  * Este servicio permite generar cobros a un maximo de 50 destinatarios.
  */
 class KhipuServiceCreateEmail extends KhipuService {
-  
+
   /**
    * Objeto que se encarga de mantener los destinatarios.
-   * 
+   *
    * @var KhipuRecipients
    */
   private $recipients;
-  
+
   /**
    * Son los detinatarios en JSON
-   * 
+   *
    * @var string
    */
   private $recipients_json;
-  
+
   /**
    * Iniciamos el servicio identificando al cobrador.
    */
-  function __construct($receiver_id, $secret){ 
+  function __construct($receiver_id, $secret){
     parent::__construct($receiver_id, $secret);
     // Cargamos el objeto KhipuRecipientes para adjuntar destinatarios.
     $this->recipients = new KhipuRecipients();
@@ -56,10 +56,10 @@ class KhipuServiceCreateEmail extends KhipuService {
       'picture_url' => '',
     );
   }
-  
+
   /**
    * Este metodo se encarga de adjuntar un destinatario al objeto.
-   * 
+   *
    * @param string $name
    *   Nombre del pagador.
    * @param string $email
@@ -71,15 +71,15 @@ class KhipuServiceCreateEmail extends KhipuService {
     $this->recipients->addRecipient($name, $email, $amount);
     return $this;
   }
-  
-  
+
+
   /**
    * Método que retorna los destinatarios
    */
   public function getRecipients() {
     return $this->recipients->getRecipients();
   }
-  
+
   /**
    * Limpa los destinatarios.
    */
@@ -87,7 +87,7 @@ class KhipuServiceCreateEmail extends KhipuService {
     $this->recipients->cleanRecipients();
     return $this;
   }
-  
+
   /**
    * Metodo que envia la solicitud a Khipu para generar los cobros.
    */
@@ -112,21 +112,51 @@ class KhipuServiceCreateEmail extends KhipuService {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_POST, TRUE);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_to_send);
-   
+
     $output = curl_exec($ch);
-    //$info = curl_getinfo($ch);
+    $info = curl_getinfo($ch);
     curl_close($ch);
-     
-    return $output;
+    if ($info['http_code'] == 200) {
+      return $this->prepareOutput($output);
+    }
+    else {
+      return FALSE;
+    }
+
   }
-  
+
+
+  /**
+   * Método que prepara la respuesta json a un arreglo.
+   */
+  private function prepareOutput($json) {
+    $decode = json_decode($json);
+
+    $payment = array(
+      'bill_id' => $decode->id,
+      'list' => array(),
+    );
+
+    foreach ($decode->links as $mail => $link) {
+      $link_explode = explode('/', $link);
+      $id = end($link_explode);
+      $payment['list'][$id] = array(
+        'link'        => $link,
+        'mail'        => $mail,
+        'payment_id'  => $id,
+      );
+    }
+
+    return $payment;
+  }
+
   /**
    * Método que asigna a formato JSON los detinatarios
    */
   private function recipientsToJson() {
     $this->recipients_json = $this->recipients->getJson();
   }
-  
+
   protected function dataToString() {
     $string = '';
     $string .= 'receiver_id='     . $this->data['receiver_id'];
