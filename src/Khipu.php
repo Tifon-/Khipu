@@ -43,11 +43,9 @@ class Khipu
   protected $secret;
 
   /**
-   * Opcionalmente para identificar al cobrador que utilizara Khipu.
+   * Identificar al cobrador que utilizara los servicios.
    *
-   * Solo se requiere para usar los siguientes servicio:
-   *   - CreateEmail
-   *   - CreatePaymentPage
+   * No es necesario para utilizar el servicio VerifyPaymentNotification.
    *
    * @param string $receiver_id
    *   Identificador dado por el servicio Khipu.
