@@ -10,7 +10,7 @@ La documentación de Khipu.com se puede ver desde aquí: https://khipu.com/page/
 
 ## Introducción
 
-Khipu cuenta con cuatro servicios, los cuales son:
+Khipu cuenta con varios servicios, algunos de ellos:
 
 1) Crear Cobros y enviarlos por Mail.
 
@@ -21,6 +21,8 @@ Khipu cuenta con cuatro servicios, los cuales son:
 4) Verificar Estado de una cuenta Khipu.
 
 Para utilizar estos servicios se debe cargar el archivo Khipu.php
+
+En la carpeta examples existen otros ejemplos.
 
 ## 1) Crear Cobros y enviarlos por Mail
 
