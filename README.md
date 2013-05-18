@@ -1,10 +1,10 @@
 # Khipu
 
-Versión Librería: 1.1.1
+Versión Biblioteca: 1.1.1
 
 Versión API Khipu: 1.1
 
-Librería PHP para utilizar los servicios de Khipu.com
+Biblioteca PHP para utilizar los servicios de Khipu.com
 
 La documentación de Khipu.com se puede ver desde aquí: https://khipu.com/page/api
 
