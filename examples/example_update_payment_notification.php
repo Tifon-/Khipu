@@ -31,6 +31,10 @@
             <label class="label-example">Versión</label>
             <input required size="3" type="textfield" name="api_version" value="<?php print isset($_POST['api_version']) ? $_POST['api_version'] : '1.2';?>"/>
           </div>
+          <div class="field">
+            <label class="label-example">Url (Opcional)</label>
+            <input size="43" type="textfield" name="url" value="<?php print isset($_POST['url']) ? $_POST['url'] : '';?>"/>
+          </div>
           <input type="submit" value="Actualizar"/>
         </form>
         <?php if (isset($_POST['receiver_id']) && isset($_POST['secret'])) :?>
@@ -41,6 +45,7 @@
               $Khipu->authenticate($_POST['receiver_id'], $_POST['secret']);
               $data = array(
                 'api_version' => $_POST['api_version'],
+                'url'         => $_POST['url'],
               );
               $service = $Khipu->loadService('UpdatePaymentNotificationUrl');
               $service->setParameters($data);
