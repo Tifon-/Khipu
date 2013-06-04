@@ -26,7 +26,7 @@ class Khipu
   /**
    * Version
    */
-  const VERSION = '1.1.1';
+  const VERSION = '1.1.2';
 
   /**
    * Corresponde a la ID del cobrador.
@@ -124,6 +124,7 @@ class Khipu
       'SetPayedByReceiver' => TRUE,
       'SetRejectedByPayer' => TRUE,
       'PaymentStatus' => TRUE,
+      'UpdatePaymentNotificationUrl' => TRUE,
     );
   }
 

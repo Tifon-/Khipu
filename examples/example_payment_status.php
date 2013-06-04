@@ -31,7 +31,7 @@
     </header>
     <div class="breadcrumb"><a href="index.php">Inicio</a></div>
     <div class="content">
-      <div>Esto es un ejemplo usando la <a href="https://github.com/mnico/Khipu" target="_blank">librería Khipu</a> para consultar estado de un pago</div>
+      <div>Esto es un ejemplo usando la <a href="https://github.com/mnico/Khipu" target="_blank">Biblioteca Khipu</a> para consultar estado de un pago</div>
       <div>
         <form method="POST">
           <div class="field">

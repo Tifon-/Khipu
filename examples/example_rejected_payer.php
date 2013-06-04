@@ -31,7 +31,7 @@
     </header>
     <div class="breadcrumb"><a href="index.php">Inicio</a></div>
     <div class="content">
-      <div>Esto es un ejemplo usando la <a href="https://github.com/mnico/Khipu" target="_blank">librería Khipu</a> para marcar un pago como rechazado</div>
+      <div>Esto es un ejemplo usando la <a href="https://github.com/mnico/Khipu" target="_blank">Biblioteca Khipu</a> para marcar un pago como rechazado</div>
       <div>
         <form method="POST">
           <div class="field">

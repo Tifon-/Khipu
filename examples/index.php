@@ -16,7 +16,7 @@
     </header>
     <div class="breadcrumb"><a href="index.php">Inicio</a></div>
     <div class="content">
-      <div>Lista de ejemplos utilizando la <a href="https://github.com/mnico/Khipu" target="_blank">librería Khipu</a></div>
+      <div>Lista de ejemplos utilizando la <a href="https://github.com/mnico/Khipu" target="_blank">Biblioteca Khipu</a></div>
       <ul>
         <li><a href="example_receiver_status.php">Ver estado de la cuenta Khipu</a></li>
         <li><a href="example_page_payment.php">Crear un botón de pago</a></li>
@@ -25,6 +25,7 @@
         <li><a href="example_payment_status.php">Consultar estado de un pago</a></li>
         <li><a href="example_payed_receiver.php">Marcar un pago como pagado</a></li>
         <li><a href="example_rejected_payer.php">Marcar un pago como rechazado</a></li>
+        <li><a href="example_update_payment_notification.php">Actualizar versión de la notificación</a></li>
       </ul>
     </div>
   </div>
