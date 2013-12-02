@@ -21,12 +21,12 @@ class Khipu
   /**
    * Version del servicio de Khipu.
    */
-  const VERSION_KHIPU_SERVICE = '1.1';
+  const VERSION_KHIPU_SERVICE = '1.2';
 
   /**
    * Version
    */
-  const VERSION = '1.1.2';
+  const VERSION = '1.1.3';
 
   /**
    * Corresponde a la ID del cobrador.
@@ -118,6 +118,7 @@ class Khipu
     return array(
       'CreateEmail' => TRUE,
       'CreatePaymentPage' => TRUE,
+      'CreatePaymentURL' => TRUE,
       'VerifyPaymentNotification' => FALSE,
       'ReceiverStatus' => TRUE,
       'SetBillExpired' => TRUE,
@@ -125,6 +126,7 @@ class Khipu
       'SetRejectedByPayer' => TRUE,
       'PaymentStatus' => TRUE,
       'UpdatePaymentNotificationUrl' => TRUE,
+      'ReceiverBanks' => TRUE,
     );
   }
 

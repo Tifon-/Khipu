@@ -10,11 +10,11 @@
 require_once 'KhipuService.php';
 
 /**
- * Servicio CreatePaymentPage que extiende de KhipuService.
+ * Servicio CreatePaymentURL que extiende de KhipuService.
  *
- * Este servicio facilita la creación del boton de pago.
+ * Este servicio facilita la creación de un pago.
  */
-class KhipuServiceCreatePaymentPage extends KhipuService {
+class KhipuServiceCreatePaymentURL extends KhipuService {
 
   /**
    * Iniciamos el servicio
@@ -22,7 +22,7 @@ class KhipuServiceCreatePaymentPage extends KhipuService {
   public function __construct($receiver_id, $secret) {
     parent::__construct($receiver_id, $secret);
     // Iniciamos la variable apiUrl con la url del servicio.
-    $this->apiUrl = Khipu::getUrlService('CreatePaymentPage');
+    $this->apiUrl = Khipu::getUrlService('CreatePaymentURL');
     // Iniciamos el arreglo $data con los valores que requiere el servicio.
     $this->data = array(
       'receiver_id' => $receiver_id,
@@ -40,64 +40,35 @@ class KhipuServiceCreatePaymentPage extends KhipuService {
     );
   }
 
-  /**
-   * Método que genera el formulario de pago en HTML
-   *
-   * @param string $button_type
-   *   Dimensión del boton a mostrar
-   *
-   * @return string
-   *   Formulario renderizado
-   */
-  public function renderForm($button_type = '100x50') {
-    $values = $this->getFormLabels();
-    $html = new DOMDocument();
-    $html->formatOutput = true;
-
-    $form = $html->createElement('form');
-    $form->setAttribute('action', $this->getApiUrl());
-    $form->setAttribute('method', 'POST');
-    foreach($values as $name => $value) {
-      $input_hidden = $html->createElement('input');
-      $input_hidden->setAttribute('type', 'hidden');
-      $input_hidden->setAttribute('name', $name);
-      $input_hidden->setAttribute('value', $value);
-      $form->appendChild($input_hidden);
-    }
-
-    $buttons = Khipu::getButtonsKhipu();
-    if (isset($buttons[$button_type])) {
-      $button = $buttons[$button_type];
-    }
-    else {
-      $button = $buttons['100x50'];
-    }
-    $submit = $html->createElement('input');
-    $submit->setAttribute('type', 'image');
-    $submit->setAttribute('src', $button);
-
-    $form->appendChild($submit);
-
-    $html->appendChild($form);
-
-    return $html->saveHTML();
-  }
-
 
   /**
-   * Método que retorna los datos requeridos para hacer el formulario
-   * adjuntando el hash.
+   * Metodo que solicita la generacion de la url
    */
-  public function getFormLabels() {
-    // Pasamos los datos a string
+  public function createUrl() {
     $string_data = $this->dataToString();
-    $values = array(
+    $data_to_send = array(
       'hash' => $this->doHash($string_data),
     );
+    // Adicionalmente adjuntamos el resto de los valores iniciados en $data
     foreach ($this->data as $name => $value) {
-      $values[$name] = $value;
+      $data_to_send[$name] = $value;
     }
-    return $values;
+    // Iniciamos CURL
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_to_send);
+
+    $output = curl_exec($ch);
+    $info = curl_getinfo($ch);
+    curl_close($ch);
+    if ($info['http_code'] == 200) {
+      return $output;
+    }
+    else {
+      return FALSE;
+    }
   }
 
   protected function dataToString() {

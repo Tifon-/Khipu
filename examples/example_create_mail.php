@@ -6,6 +6,7 @@
    * conseguir gratuitamente ingresando a Khipu.com
    */
   require_once "../src/Khipu.php";
+  $amount = 25000;
 ?>
 <!doctype html>
 <html lang="en">
@@ -69,7 +70,7 @@
                 // Opcionalmente podemos asignar una URL de una imagen.
                 'picture_url' => '',
               );
-              $amount = 25000;
+
 
 
               if ($_POST['amount'] > 0) {

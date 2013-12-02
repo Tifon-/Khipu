@@ -61,7 +61,6 @@ class KhipuServiceSetRejectedByPayer extends KhipuService {
     $string .= 'receiver_id='     . $this->receiver_id;
     $string .= '&payment_id='     . $this->data['payment_id'];
     $string .= '&text='           . $this->data['text'];
-    $string .= '&secret='         . $this->secret;
     return trim($string);
   }
 }

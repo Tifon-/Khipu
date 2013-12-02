@@ -61,7 +61,6 @@ class KhipuServicePaymentStatus extends KhipuService {
     $string = '';
     $string .= 'receiver_id='     . $this->receiver_id;
     $string .= '&payment_id='      . $this->data['payment_id'];
-    $string .= '&secret='         . $this->secret;
     return trim($string);
   }
 }

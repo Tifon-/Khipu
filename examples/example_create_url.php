@@ -12,18 +12,18 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Example Khipu Library | Crear Boton de Pago</title>
+  <title>Example Khipu Library | Crear URL para un pago</title>
   <meta name="description" content="Example Khipu Library">
   <link href="style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
   <div class="wrapper">
     <header>
-      <h1 class="title">Crear Botón de Pago</h1>
+      <h1 class="title">Crear URL para un pago</h1>
     </header>
     <div class="breadcrumb"><a href="index.php">Inicio</a></div>
     <div class="content">
-      <div>Esto es un ejemplo usando la <a href="https://github.com/mnico/Khipu" target="_blank">Biblioteca Khipu</a> para crear un boton de pago</div>
+      <div>Esto es un ejemplo usando la <a href="https://github.com/mnico/Khipu" target="_blank">Biblioteca Khipu</a> para crear URL para un pago</div>
       <div>
         <form method="POST">
           <div class="field">
@@ -46,16 +46,14 @@
             // Nos identificamos
             $Khipu->authenticate($_POST['receiver_id'], $_POST['secret']);
             // Cargamos el servicio para crear el boton
-            $khipu_service = $Khipu->loadService('CreatePaymentPage');
+            $khipu_service = $Khipu->loadService('CreatePaymentURL');
             $payer_email = 'cliente@gmail.com';
-
-
 
             $picture_url = 'https://s3.amazonaws.com/static.khipu.com/buttons/100x50.png';
 
             $data = array(
               'subject' => 'Pago de Ejemplo',
-              'body' => 'Estamos usando la librería de Khipu.',
+              'body' => 'Estamos usando la librería de Khipu, creamos una URL',
               'amount' => $amount,
               'transaction_id' => 1,
               // Dejar por defecto un correo para recibir el comprobante
@@ -72,25 +70,14 @@
             }
           ?>
           <div>
-            <p>Los datos a enviar son:</p>
-            <ul>
-              <?php foreach ($data as $name => $value):?>
-                <li><strong><?php print $name;?></strong> = <?php print $value;?></li>
-                <?php
-                  // Le asignamos los valores
-                  $khipu_service->setParameter($name, $value);?>
-              <?php endforeach;?>
-            </ul>
-
-            <div>
-              <?php
-                // Generamos el formulario.
-                print $khipu_service->renderForm();?>
-            </div>
+            <?php
+              $khipu_service->setParameters($data);
+              print $khipu_service->createUrl();
+            ?>
           </div>
 
         <?php else: ?>
-          <div>Aquí se generará el botón de pago.</div>
+          <div>Aquí se generará la url.</div>
         <?php endif;?>
       </div>
     </div>

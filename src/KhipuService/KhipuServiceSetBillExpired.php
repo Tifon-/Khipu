@@ -60,7 +60,6 @@ class KhipuServiceSetBillExpired extends KhipuService {
     $string .= 'receiver_id='     . $this->receiver_id;
     $string .= '&bill_id='        . $this->data['bill_id'];
     $string .= '&text='           . $this->data['text'];
-    $string .= '&secret='         . $this->secret;
     return trim($string);
   }
 }

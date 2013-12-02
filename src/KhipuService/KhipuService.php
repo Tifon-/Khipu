@@ -65,7 +65,7 @@ abstract class KhipuService {
    * @return string
    */
   protected function doHash($string) {
-    return sha1($string);
+    return hash_hmac('sha256', $string, $this->secret);
   }
 
   /**

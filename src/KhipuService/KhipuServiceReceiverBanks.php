@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Nicolas Moncada <nicolas.moncada@tifon.cl>
  *
@@ -9,37 +10,29 @@
 require_once 'KhipuService.php';
 
 /**
- * Servicio KhipuServiceUpdatePaymentNotificationUrl extiende de KhipuService
+ * Servicio ReceiverBanks extiende de KhipuService
  *
- * Este servicio configura la version de notificación de una cuenta.
+ * Este servicio consulta por los bancos.
  */
-class KhipuServiceUpdatePaymentNotificationUrl extends KhipuService {
+class KhipuServiceReceiverBanks extends KhipuService {
   /**
    * Iniciamos el servicio
    */
   public function __construct($receiver_id, $secret) {
     parent::__construct($receiver_id, $secret);
     // Asignamos la url del servicio
-    $this->apiUrl = Khipu::getUrlService('UpdatePaymentNotificationUrl');
-    $this->data = array(
-      'url'         => '',
-      'api_version' => '',
-    );
+    $this->apiUrl = Khipu::getUrlService('ReceiverBanks');
   }
 
   /**
-   * Método quue envia la solicitud de actualizar.
-   *
-   * @return bool
+   * Método que consulta por los bancos.
    */
-  public function update() {
+  public function consult() {
     $string_data = $this->dataToString();
 
     $data_to_send = array(
-      'hash'        => $this->doHash($string_data),
+      'hash' => $this->doHash($string_data),
       'receiver_id' => $this->receiver_id,
-      'url'         => $this->data['url'],
-      'api_version' => $this->data['api_version'],
     );
 
     $ch = curl_init();
@@ -48,18 +41,16 @@ class KhipuServiceUpdatePaymentNotificationUrl extends KhipuService {
     curl_setopt($ch, CURLOPT_POST, TRUE);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_to_send);
 
-    $this->message = curl_exec($ch);
+    $output = curl_exec($ch);
     $info = curl_getinfo($ch);
     curl_close($ch);
 
-    return $info['http_code'] == 200;
+    return $output;
   }
 
   protected function dataToString() {
     $string = '';
-    $string .= 'receiver_id='   . $this->receiver_id;
-    $string .= '&url='          . $this->data['url'];
-    $string .= '&api_version='  . $this->data['api_version'];
+    $string .= 'receiver_id='     . $this->receiver_id;
     return trim($string);
   }
 }

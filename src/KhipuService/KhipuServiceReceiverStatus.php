@@ -53,7 +53,6 @@ class KhipuServiceReceiverStatus extends KhipuService {
   protected function dataToString() {
     $string = '';
     $string .= 'receiver_id='     . $this->receiver_id;
-    $string .= '&secret='         . $this->secret;
     return trim($string);
   }
 }
