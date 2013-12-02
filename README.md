@@ -1,6 +1,6 @@
 # Khipu
 
-Versión Biblioteca: 1.1.3
+Versión Biblioteca: 1.2
 
 Versión API Khipu: 1.2
 
