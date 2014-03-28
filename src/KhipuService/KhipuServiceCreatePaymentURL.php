@@ -34,6 +34,7 @@ class KhipuServiceCreatePaymentURL extends KhipuService {
       'return_url' => '',
       'cancel_url' => '',
       'bank_id' => '',
+      'expires_date' => '',
       'transaction_id' => '',
       'picture_url' => '',
       'payer_email' => '',
@@ -79,6 +80,7 @@ class KhipuServiceCreatePaymentURL extends KhipuService {
     $string .= '&amount=' . $this->data['amount'];
     $string .= '&payer_email=' . $this->data['payer_email'];
     $string .= '&bank_id=' . $this->data['bank_id'];
+    $string .= '&expires_date=' . $this->data['expires_date'];
     $string .= '&transaction_id=' . $this->data['transaction_id'];
     $string .= '&custom=' . $this->data['custom'];
     $string .= '&notify_url=' . $this->data['notify_url'];

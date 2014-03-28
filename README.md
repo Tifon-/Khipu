@@ -1,8 +1,8 @@
 # Khipu
 
-Versión Biblioteca: 1.2
+Versión Biblioteca: 1.3
 
-Versión API Khipu: 1.2
+Versión API Khipu: 1.3
 
 Biblioteca PHP para utilizar los servicios de Khipu.com
 
@@ -172,7 +172,7 @@ La clase Khipu cuenta con dos funciones estáticas, las cuales son:
   // ...
   require_once "Khipu.php";
 
-  // Imprime https://khipu.com/api/1.1/verifyPaymentNotification
+  // Imprime https://khipu.com/api/1.3/verifyPaymentNotification
   echo Khipu::getUrlService('VerifyPaymentNotification');
 ?>
 ```
