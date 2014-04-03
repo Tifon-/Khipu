@@ -42,6 +42,7 @@ class KhipuServiceSetBillExpired extends KhipuService {
       'bill_id' => $this->data['bill_id'],
       'text' => $this->data['text'],
     );
+    $data_to_send['agent'] = $this->agent;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

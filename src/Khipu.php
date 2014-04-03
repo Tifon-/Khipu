@@ -57,6 +57,13 @@ class Khipu
     $this->secret = $secret;
   }
 
+  protected $agent = 'lib-php-1.3';
+
+  public function setAgent($agent) {
+      $this->agent = 'lib-php-1.3 - '.$agent;
+      return $this;
+  }
+
   /**
    * Carga el servicio y retorna el objeto, en caso de no existir el servicio,
    * se invoca un excepcion.
@@ -77,14 +84,17 @@ class Khipu
       if ($services_name[$service_name]) {
         // Es requerido identificarse para usar estos servicios.
         if ($this->receiver_id && $this->secret) {
-          return new $class($this->receiver_id, $this->secret);
+          $service = new $class($this->receiver_id, $this->secret);
+        } else {
+            // Invocamos un Exception
+            throw new Exception("Is necessary to authenticate to use the service \"$service_name\"");
         }
-        // Invocamos un Exception
-        throw new Exception("Is necessary to authenticate to use the service \"$service_name\"");
       }
       else {
-        return new $class();
+        $service = new $class();
       }
+        $service->setAgent($this->agent);
+        return $service;
     }
     // Si no existe el servicio se invoca un Exception
     throw new Exception("The service \"$service_name\" does not exist");
