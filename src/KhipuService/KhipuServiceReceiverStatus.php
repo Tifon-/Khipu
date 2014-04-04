@@ -36,6 +36,7 @@ class KhipuServiceReceiverStatus extends KhipuService {
       'hash' => $this->doHash($string_data),
       'receiver_id' => $this->receiver_id,
     );
+    $data_to_send['agent'] = $this->agent;
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $this->apiUrl);

@@ -106,6 +106,8 @@ class KhipuServiceCreateEmail extends KhipuService {
     foreach ($this->data as $name => $value) {
       $data_to_send[$name] = $value;
     }
+    $data_to_send['agent'] = $this->agent;
+
     // Iniciamos CURL
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
