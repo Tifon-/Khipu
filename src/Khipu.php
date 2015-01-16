@@ -137,6 +137,7 @@ class Khipu
       'PaymentStatus' => TRUE,
       'UpdatePaymentNotificationUrl' => TRUE,
       'ReceiverBanks' => TRUE,
+      'GetPaymentNotification' => TRUE,
     );
   }
 
