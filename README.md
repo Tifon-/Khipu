@@ -130,14 +130,30 @@ A continuación un ejemplo:
 
   $Khipu = new Khipu();
   // No necesitamos identificar al cobrador para usar este servicio.
-  $khipu_service = $Khipu->loadService('VerifyPaymentNotification');
-  // Adjuntamos los valores del $_POST en el servicio.
-  $khipu_service->setDataFromPost();
-  // Hacemos una solicitud a Khipu para verificar.
-  $response = $khipu_service->verify();
-  if ($response['response'] == 'VERIFIED') {
-    // Hacemos algo al respecto...
+
+  $api_version = $_POST['api_version'];
+
+  if($api_version == '1.2') {
+	$khipu_service = $Khipu->loadService('VerifyPaymentNotification');
+  	$khipu_service->setDataFromPost();
+	$response = $khipu_service->verify();
+	if($response['response'] == 'VERIFIED'){
+		//el pago esta verificado, hacemos algo al respecto
+	}
+
+  } else if ($api_version == '1.3') {
+
+	$khipu_service = $Khipu->loadService('GetPaymentNotification');
+  	$khipu_service->setDataFromPost();
+	$response = $khipu_service->consult();
+	
+	//validamos que la notificacion de pago corresponda con una solicitud de pago esperada
+	
+
+  } else {
+	// api de notificacion no soportada
   }
+
 
 ```
 
