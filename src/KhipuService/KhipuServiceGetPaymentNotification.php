@@ -51,6 +51,22 @@ class KhipuServiceGetPaymentNotification extends KhipuService {
     return $output;
   }
 
+  /**
+   * Esta funcion es para asignar los valores recibidos por POST.
+   *
+   * Puede usarse en reemplazo del metodo setParameter().
+   */
+  public function setDataFromPost() {
+    // Recorremos el arreglo $data
+    foreach ($this->data as $key => $value) {
+      // Si existe la llave en $_POST entonces asignamos su valor
+      // a $data
+      if (isset($_POST[$key])) {
+        $this->data[$key] = $_POST[$key];
+      }
+    }
+  }
+
   protected function dataToString() {
     $string = '';
     $string .= 'receiver_id='         . $this->receiver_id;
