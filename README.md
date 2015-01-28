@@ -148,13 +148,11 @@ A continuación un ejemplo:
 	$response = json_decode($khipu_service->consult());
 	
 	// validamos que la notificacion de pago corresponda con una solicitud de pago esperada
-
-
-        if($response->transaction_id == $mi_transaction_id &&  $response->receiver_id == $receiver_id, $response->amount == $mi_amount) {
+	if($response->transaction_id == $mi_transaction_id &&  $response->receiver_id == $receiver_id, $response->amount == $mi_amount) {
 		// la notificacion esta ok, la estaba esperando y debo procesar el pedido
 	} else {
 		// la notificacion no es para mi o no la estaba esperando, la ignoro
-        }
+	}
 	
 
   } else {
