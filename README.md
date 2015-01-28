@@ -142,12 +142,19 @@ A continuación un ejemplo:
 	}
 
   } else if ($api_version == '1.3') {
-
+	$Khipu->authenticate($receiver_id, $llave);
 	$khipu_service = $Khipu->loadService('GetPaymentNotification');
   	$khipu_service->setDataFromPost();
-	$response = $khipu_service->consult();
+	$response = json_decode($khipu_service->consult());
 	
-	//validamos que la notificacion de pago corresponda con una solicitud de pago esperada
+	// validamos que la notificacion de pago corresponda con una solicitud de pago esperada
+
+
+        if($response->transaction_id == $mi_transaction_id &&  $response->receiver_id == $receiver_id, $response->amount == $mi_amount) {
+		// la notificacion esta ok, la estaba esperando y debo procesar el pedido
+	} else {
+		// la notificacion no es para mi o no la estaba esperando, la ignoro
+        }
 	
 
   } else {
