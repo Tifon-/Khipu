@@ -113,9 +113,8 @@ class Khipu
     $services_name = self::getAllServicesName();
 
     if (array_key_exists($service_name, $services_name)) {
-      return $url_khipu . lcfirst($service_name);
+       return $url_khipu . strtolower($service_name[0]);
     }
-
     return FALSE;
   }
 
